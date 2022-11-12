@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+
   def new
     @post_image = PostImage.new
   end
@@ -7,11 +8,17 @@ class BooksController < ApplicationController
     @post_image = PostImage.new(post_image_params)
     @post_image.user_id = current_user.id
     @post_image.save
+    if @book.save
+      flash[:notice] = "successfully"
+      redirect_to book_path(@book.id)
+    else
     redirect_to post_images_path
+    end
   end
 
   def index
     @books = Book.all
+    @user=current_user
   end
 
   def show
@@ -40,7 +47,7 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :image)
   end
 
 end

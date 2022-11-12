@@ -15,5 +15,13 @@ class PostImagesController < ApplicationController
       render :new
     end
   end
+  
+  def index
+    @post_images = PostImage.page(params[:page])
+  end
+  
+  def show
+    @post_image = PostImage.find(params[:id])
+  end
 
 end
